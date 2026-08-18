@@ -1,0 +1,10 @@
+{
+  "name": "crucigrama-diario",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Genera un crucigrama nuevo cada día (cultura general, Latinoamérica, Uruguay y Argentina) y lo publica en GitHub Pages.",
+  "main": "generate.js",
+  "scripts": {
+    "generate": "node generate.js"
+  }
+}

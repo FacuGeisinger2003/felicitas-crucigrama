@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabla de posiciones · Crucigrama Rioplatense</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+:root{
+  --tinta:#16233A; --tinta-2:#1E3050; --yerba:#8BAA3E; --yerba-deep:#5F7A28;
+  --azulejo:#3E75AC; --ladrillo:#C1502E; --hueso:#F2EAD9; --mostaza:#DFA83F; --cell:clamp(24px, 7vw, 34px);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--tinta);color:var(--hueso);font-family:'Space Grotesk',sans-serif;min-height:100vh;padding:20px 14px 60px;}
+.tile-band{height:14px;width:100%;max-width:980px;margin:0 auto;background-image:linear-gradient(45deg,var(--mostaza) 25%,transparent 25%,transparent 75%,var(--mostaza) 75%),linear-gradient(45deg,var(--mostaza) 25%,transparent 25%,transparent 75%,var(--mostaza) 75%);background-size:14px 14px;background-position:0 0,7px 7px;opacity:.55;border-radius:3px;}
+header{max-width:980px;margin:18px auto 22px;text-align:center;}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(26px,5vw,42px);margin:0 0 6px;color:var(--hueso);}
+h1 span{color:var(--yerba);}
+.subtitle{font-size:14px;color:#C9CFDA;max-width:560px;margin:0 auto;line-height:1.5;}
+a{color:var(--mostaza);}
+.top-nav{max-width:980px;margin:0 auto 6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;}
+@media (max-width:480px){
+  .top-nav{justify-content:center;text-align:center;gap:4px 16px;}
+  body{padding:16px 10px 40px;}
+}
+.top-nav a{color:#C9CFDA;text-decoration:none;}
+.top-nav a:hover{color:var(--mostaza);}
+.user-badge{font-size:12px;color:#C9CFDA;}
+.user-badge button{background:none;border:none;color:var(--mostaza);cursor:pointer;font-size:12px;padding:0;margin-left:6px;text-decoration:underline;font-family:inherit;}
+footer{max-width:980px;margin:24px auto 0;text-align:center;font-size:11px;color:#7C8496;}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(10,15,26,.75);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;}
+.modal-overlay.on{display:flex;}
+.modal-box{background:var(--tinta-2);border-radius:16px;padding:26px 24px;max-width:360px;width:100%;border:1px solid rgba(242,234,217,.12);}
+.modal-box h3{font-family:'Fraunces',serif;margin:0 0 6px;font-size:20px;color:var(--hueso);}
+.modal-box p{font-size:13px;color:#C9CFDA;margin:0 0 16px;line-height:1.4;}
+.modal-box label{display:block;font-size:12px;color:#C9CFDA;margin:12px 0 4px;}
+.modal-box input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid rgba(242,234,217,.2);background:var(--tinta);color:var(--hueso);font-family:'Space Grotesk',sans-serif;font-size:14px;}
+.modal-box input:focus{outline:2px solid var(--azulejo);}
+.modal-error{color:#F0A98F;font-size:12px;margin-top:8px;min-height:14px;}
+.modal-box button{margin-top:16px;width:100%;background:var(--yerba);color:var(--tinta);border:none;border-radius:999px;padding:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;font-size:14px;}
+
+.board-panel{max-width:640px;margin:0 auto 24px;background:var(--tinta-2);border-radius:14px;padding:18px 20px;border:1px solid rgba(242,234,217,.08);}
+.board-panel h2{font-family:'Fraunces',serif;font-size:18px;margin:0 0 12px;color:var(--mostaza);}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+.table-scroll{overflow-x:auto;}
+@media (max-width:480px){
+  .board-panel{padding:14px 10px;}
+  table{font-size:12px;min-width:420px;}
+  td,th{padding:6px 4px;}
+}
+th{text-align:left;color:#8B93A6;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;}
+td{padding:8px;border-top:1px solid rgba(242,234,217,.08);}
+tr.me td{background:rgba(139,170,62,.14);font-weight:700;}
+.pos{font-family:'JetBrains Mono',monospace;color:var(--mostaza);width:28px;}
+.empty-msg{font-size:13px;color:#8B93A6;text-align:center;padding:14px 0;}
+.warn{max-width:640px;margin:0 auto 20px;background:rgba(193,80,46,.15);border:1px solid rgba(193,80,46,.4);border-radius:10px;padding:12px 16px;font-size:13px;color:#F0A98F;text-align:center;}
+</style>
+</head>
+<body>
+<div class="tile-band"></div>
+<div class="top-nav" style="max-width:640px;">
+  <a href="index.html">&larr; Todos los crucigramas</a>
+</div>
+<header>
+  <h1>Tabla de <span>posiciones</span></h1>
+  <p class="subtitle">Tiempos de hoy y ranking general entre todos los que juegan.</p>
+</header>
+
+<div id="warnBox"></div>
+
+<div class="board-panel">
+  <h2>⏱ Hoy</h2>
+  <div id="todayTable" class="table-scroll"><p class="empty-msg">Cargando...</p></div>
+</div>
+
+<div class="board-panel">
+  <h2>🏆 Ranking general</h2>
+  <div id="overallTable" class="table-scroll"><p class="empty-msg">Cargando...</p></div>
+</div>
+
+<footer>Crucigrama Rioplatense · generado automáticamente</footer>
+
+<script>
+const FIREBASE_DB_URL = "https://crucigrama-luciernaga-default-rtdb.firebaseio.com";
+const USER_KEY = 'crucigrama_user_v1';
+function loadUser() { try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch (e) { return null; } }
+const me = loadUser();
+
+function todayInMontevideo() {
+  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montevideo', year: 'numeric', month: '2-digit', day: '2-digit' });
+  return fmt.format(new Date());
+}
+function fmtTime(s) {
+  const mm = String(Math.floor(s / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  return `${mm}:${ss}`;
+}
+
+function renderTodayTable(scoresForDate) {
+  const el = document.getElementById('todayTable');
+  const rows = Object.values(scoresForDate || {}).sort((a, b) => a.seconds - b.seconds);
+  if (!rows.length) { el.innerHTML = '<p class="empty-msg">Todavía nadie mandó su tiempo hoy.</p>'; return; }
+  let html = '<table><tr><th></th><th>Jugador</th><th>Tiempo</th></tr>';
+  rows.forEach((r, i) => {
+    const isMe = me && r.username === me.username;
+    html += `<tr class="${isMe ? 'me' : ''}"><td class="pos">${i + 1}°</td><td>${r.nombre} ${r.apellido}</td><td>${fmtTime(r.seconds)}</td></tr>`;
+  });
+  html += '</table>';
+  el.innerHTML = html;
+}
+
+function renderOverallTable(allScores) {
+  const el = document.getElementById('overallTable');
+  const byUser = {};
+  Object.values(allScores || {}).forEach((dayScores) => {
+    Object.values(dayScores || {}).forEach((r) => {
+      if (!byUser[r.username]) byUser[r.username] = { nombre: r.nombre, apellido: r.apellido, username: r.username, games: 0, best: Infinity, total: 0 };
+      const u = byUser[r.username];
+      u.games += 1;
+      u.total += r.seconds;
+      if (r.seconds < u.best) u.best = r.seconds;
+    });
+  });
+  const rows = Object.values(byUser).sort((a, b) => b.games - a.games || a.best - b.best);
+  if (!rows.length) { el.innerHTML = '<p class="empty-msg">Todavía no hay tiempos cargados.</p>'; return; }
+  let html = '<table><tr><th></th><th>Jugador</th><th>Jugados</th><th>Mejor</th><th>Promedio</th></tr>';
+  rows.forEach((r, i) => {
+    const isMe = me && r.username === me.username;
+    html += `<tr class="${isMe ? 'me' : ''}"><td class="pos">${i + 1}°</td><td>${r.nombre} ${r.apellido}</td><td>${r.games}</td><td>${fmtTime(r.best)}</td><td>${fmtTime(Math.round(r.total / r.games))}</td></tr>`;
+  });
+  html += '</table>';
+  el.innerHTML = html;
+}
+
+async function load() {
+  if (!FIREBASE_DB_URL) {
+    document.getElementById('warnBox').innerHTML = '<div class="warn">⚠️ La tabla de posiciones todavía no está configurada (falta la base de datos en lib/config.json).</div>';
+    document.getElementById('todayTable').innerHTML = '';
+    document.getElementById('overallTable').innerHTML = '';
+    return;
+  }
+  try {
+    const res = await fetch(`${FIREBASE_DB_URL}/scores.json`);
+    const data = await res.json();
+    renderTodayTable((data || {})[todayInMontevideo()]);
+    renderOverallTable(data);
+  } catch (err) {
+    document.getElementById('warnBox').innerHTML = '<div class="warn">No se pudo cargar la tabla. Revisá tu conexión.</div>';
+  }
+}
+load();
+</script>
+</body>
+</html>
