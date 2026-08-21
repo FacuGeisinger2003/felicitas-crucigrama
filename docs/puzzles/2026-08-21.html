@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crucigrama del 2026-08-21</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+:root{
+  --tinta:#16233A; --tinta-2:#1E3050; --yerba:#8BAA3E; --yerba-deep:#5F7A28;
+  --azulejo:#3E75AC; --ladrillo:#C1502E; --hueso:#F2EAD9; --mostaza:#DFA83F; --cell:clamp(24px, 7vw, 34px);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--tinta);color:var(--hueso);font-family:'Space Grotesk',sans-serif;min-height:100vh;padding:20px 14px 60px;}
+.tile-band{height:14px;width:100%;max-width:980px;margin:0 auto;background-image:linear-gradient(45deg,var(--mostaza) 25%,transparent 25%,transparent 75%,var(--mostaza) 75%),linear-gradient(45deg,var(--mostaza) 25%,transparent 25%,transparent 75%,var(--mostaza) 75%);background-size:14px 14px;background-position:0 0,7px 7px;opacity:.55;border-radius:3px;}
+header{max-width:980px;margin:18px auto 22px;text-align:center;}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(26px,5vw,42px);margin:0 0 6px;color:var(--hueso);}
+h1 span{color:var(--yerba);}
+.subtitle{font-size:14px;color:#C9CFDA;max-width:560px;margin:0 auto;line-height:1.5;}
+a{color:var(--mostaza);}
+.top-nav{max-width:980px;margin:0 auto 6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;}
+@media (max-width:480px){
+  .top-nav{justify-content:center;text-align:center;gap:4px 16px;}
+  body{padding:16px 10px 40px;}
+}
+.top-nav a{color:#C9CFDA;text-decoration:none;}
+.top-nav a:hover{color:var(--mostaza);}
+.user-badge{font-size:12px;color:#C9CFDA;}
+.user-badge button{background:none;border:none;color:var(--mostaza);cursor:pointer;font-size:12px;padding:0;margin-left:6px;text-decoration:underline;font-family:inherit;}
+footer{max-width:980px;margin:24px auto 0;text-align:center;font-size:11px;color:#7C8496;}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(10,15,26,.75);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;}
+.modal-overlay.on{display:flex;}
+.modal-box{background:var(--tinta-2);border-radius:16px;padding:26px 24px;max-width:360px;width:100%;border:1px solid rgba(242,234,217,.12);}
+.modal-box h3{font-family:'Fraunces',serif;margin:0 0 6px;font-size:20px;color:var(--hueso);}
+.modal-box p{font-size:13px;color:#C9CFDA;margin:0 0 16px;line-height:1.4;}
+.modal-box label{display:block;font-size:12px;color:#C9CFDA;margin:12px 0 4px;}
+.modal-box input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid rgba(242,234,217,.2);background:var(--tinta);color:var(--hueso);font-family:'Space Grotesk',sans-serif;font-size:14px;}
+.modal-box input:focus{outline:2px solid var(--azulejo);}
+.modal-error{color:#F0A98F;font-size:12px;margin-top:8px;min-height:14px;}
+.modal-box button{margin-top:16px;width:100%;background:var(--yerba);color:var(--tinta);border:none;border-radius:999px;padding:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;font-size:14px;}
+
+.wrap{max-width:980px;margin:0 auto;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.board-panel{background:var(--tinta-2);border-radius:14px;padding:16px;border:1px solid rgba(242,234,217,.08);flex:1 1 560px;min-width:0;}
+.board-scroll{overflow-x:auto;padding-bottom:6px;}
+.grid{display:grid;gap:2px;width:max-content;margin:4px auto;background:rgba(0,0,0,.25);padding:2px;border-radius:6px;}
+.cell{position:relative;width:var(--cell);height:var(--cell);}
+.cell.blocked{visibility:hidden;}
+.cell input{width:100%;height:100%;border:none;border-radius:3px;text-align:center;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;background:var(--hueso);color:var(--tinta);padding:0;caret-color:var(--azulejo);}
+.cell input:focus{outline:2px solid var(--azulejo);outline-offset:-2px;}
+.cell.active-word input{background:#E4D9BC;}
+.cell.active-cell input{background:#D8C89A;outline:2px solid var(--mostaza);outline-offset:-2px;}
+.cell input.correct{background:#CFE0B2;color:var(--yerba-deep);}
+.cell input.incorrect{background:#EFC3B4;color:var(--ladrillo);}
+.cell input.revealed{background:#E7D7A8;color:var(--tinta);}
+.num{position:absolute;top:1px;left:2px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--tinta-2);font-weight:700;pointer-events:none;z-index:2;}
+.controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+button{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;border:none;border-radius:999px;padding:9px 18px;cursor:pointer;transition:transform .1s ease;}
+button:active{transform:scale(.96);}
+.btn-primary{background:var(--yerba);color:var(--tinta);}
+.btn-secondary{background:transparent;color:var(--hueso);border:1px solid rgba(242,234,217,.35);}
+.btn-secondary:hover{background:rgba(242,234,217,.08);}
+.btn-ghost{background:transparent;color:var(--mostaza);border:1px dashed rgba(223,168,63,.5);}
+.btn-ghost:hover{background:rgba(223,168,63,.08);}
+.btn-submit{background:var(--mostaza);color:var(--tinta);}
+.btn-submit:disabled{opacity:.5;cursor:default;}
+.status{text-align:center;margin-top:12px;font-size:13px;color:#C9CFDA;min-height:18px;}
+.status.win{color:var(--yerba);font-weight:700;font-family:'Fraunces',serif;font-size:16px;}
+.timer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mostaza);margin-top:4px;}
+.hint-counter{text-align:center;font-size:12px;color:#C1502E;margin-top:2px;min-height:14px;}
+.submit-box{text-align:center;margin-top:14px;display:none;}
+.submit-box.on{display:block;}
+.submit-msg{font-size:12px;color:#8B93A6;margin-top:6px;min-height:14px;}
+.practice-badge{display:none;text-align:center;font-size:11px;color:var(--mostaza);background:rgba(223,168,63,.12);border:1px solid rgba(223,168,63,.3);border-radius:999px;padding:4px 12px;margin:0 auto 10px;width:fit-content;}
+.practice-badge.on{display:block;}
+.clues-panel{flex:1 1 320px;min-width:260px;display:flex;flex-direction:column;gap:16px;}
+.clue-group{background:var(--tinta-2);border-radius:14px;padding:16px 18px;border:1px solid rgba(242,234,217,.08);}
+.clue-group h2{font-family:'Fraunces',serif;font-size:16px;margin:0 0 10px;color:var(--mostaza);}
+.clue-group ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.clue-group li{font-size:13px;line-height:1.4;padding:6px 8px;border-radius:8px;cursor:pointer;color:#D9DEE7;}
+.clue-group li:hover{background:rgba(242,234,217,.06);}
+.clue-group li.selected{background:var(--yerba);color:var(--tinta);font-weight:600;}
+.clue-group li.done{opacity:.45;text-decoration:line-through;}
+.clue-group li.done.selected{opacity:.7;}
+.clue-group li b{font-family:'JetBrains Mono',monospace;margin-right:6px;}
+@media (max-width:640px){ .board-panel,.clue-group{padding:12px;} }
+@media (max-width:400px){ .num{font-size:8px;} .cell input{font-size:13px;} }
+</style>
+</head>
+<body>
+<div class="tile-band"></div>
+<div class="top-nav">
+  <a href="../index.html">&larr; Todos los crucigramas</a>
+  <a href="../leaderboard.html">🏆 Tabla de posiciones</a>
+</div>
+<header>
+  <h1>Crucigrama <span>del día</span></h1>
+  <p class="subtitle" id="subtitleText">viernes, 21 de agosto de 2026. Cultura general del mundo, Latinoamérica, Uruguay y Argentina.</p>
+  <p class="user-badge" id="userBadge"></p>
+  <div class="timer" id="timer">⏱ 00:00 &mdash; escribí una letra para arrancar el cronómetro</div>
+  <div class="hint-counter" id="hintCounter"></div>
+</header>
+
+<div class="wrap">
+  <div class="board-panel">
+    <div class="practice-badge" id="practiceBadge">🎲 Modo práctica — este no cuenta para la tabla</div>
+    <div class="board-scroll"><div class="grid" id="grid"></div></div>
+    <div class="controls">
+      <button class="btn-primary" id="btnCheck">Revisar</button>
+      <button class="btn-secondary" id="btnHint">💡 Pista</button>
+      <button class="btn-secondary" id="btnReveal">Ver soluciones</button>
+      <button class="btn-secondary" id="btnReset">Reiniciar</button>
+    </div>
+    <div class="status" id="status">0 / 18 palabras completas</div>
+    <div class="submit-box" id="submitBox">
+      <button class="btn-submit" id="btnSubmit">📤 Mandar mi tiempo a la tabla</button>
+      <div class="submit-msg" id="submitMsg"></div>
+    </div>
+    <div class="controls" style="margin-top:16px;">
+      <button class="btn-ghost" id="btnNew">🎲 Jugar un crucigrama nuevo</button>
+      <button class="btn-ghost" id="btnBackToDaily" style="display:none;">🔁 Volver al crucigrama del día</button>
+    </div>
+  </div>
+
+  <div class="clues-panel">
+    <div class="clue-group"><h2>Horizontales →</h2><ul id="acrossList"></ul></div>
+    <div class="clue-group"><h2>Verticales ↓</h2><ul id="downList"></ul></div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="userModalOverlay">
+  <div class="modal-box">
+    <h3>¿Cómo te llamás?</h3>
+    <p>Para aparecer en la tabla de posiciones con tus amigos. Solo se guarda en este navegador.</p>
+    <form id="userForm">
+      <label for="inNombre">Nombre</label>
+      <input id="inNombre" type="text" maxlength="30" autocomplete="given-name" required>
+      <label for="inApellido">Apellido</label>
+      <input id="inApellido" type="text" maxlength="30" autocomplete="family-name" required>
+      <label for="inUsername">Usuario (sin espacios)</label>
+      <input id="inUsername" type="text" maxlength="20" placeholder="ej: facugeisinger" required>
+      <div class="modal-error" id="modalError"></div>
+      <button type="submit">Guardar y jugar</button>
+    </form>
+  </div>
+</div>
+
+<footer>Crucigrama Rioplatense · generado automáticamente</footer>
+
+<script>
+function normalize(s) {
+  return s
+    .toUpperCase()
+    .replace(/Á/g, 'A').replace(/É/g, 'E').replace(/Í/g, 'I')
+    .replace(/Ó/g, 'O').replace(/Ú/g, 'U').replace(/Ñ/g, 'N')
+    .replace(/[^A-Z]/g, '');
+}
+
+function generateLayout(rawWords) {
+  let words = rawWords
+    .map((w) => ({ ...w, word: normalize(w.word) }))
+    .filter((w) => w.word.length >= 3);
+  words.sort((a, b) => b.word.length - a.word.length);
+  if (!words.length) return null;
+
+  const grid = new Map();
+  const placed = [];
+  const key = (r, c) => r + ',' + c;
+
+  function canPlace(word, row, col, dir) {
+    let intersections = 0;
+    const br = dir === 'V' ? row - 1 : row;
+    const bc = dir === 'H' ? col - 1 : col;
+    if (grid.has(key(br, bc))) return null;
+    for (let i = 0; i < word.length; i++) {
+      const r = row + (dir === 'V' ? i : 0);
+      const c = col + (dir === 'H' ? i : 0);
+      const existing = grid.get(key(r, c));
+      if (existing) {
+        if (existing !== word[i]) return null;
+        intersections++;
+      } else if (dir === 'H') {
+        if (grid.has(key(r - 1, c)) || grid.has(key(r + 1, c))) return null;
+      } else {
+        if (grid.has(key(r, c - 1)) || grid.has(key(r, c + 1))) return null;
+      }
+    }
+    const ar = dir === 'V' ? row + word.length : row;
+    const ac = dir === 'H' ? col + word.length : col;
+    if (grid.has(key(ar, ac))) return null;
+    return intersections;
+  }
+
+  function placeWord(word, row, col, dir) {
+    for (let i = 0; i < word.length; i++) {
+      const r = row + (dir === 'V' ? i : 0);
+      const c = col + (dir === 'H' ? i : 0);
+      grid.set(key(r, c), word[i]);
+    }
+  }
+
+  function currentBounds() {
+    let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+    for (const k of grid.keys()) {
+      const [r, c] = k.split(',').map(Number);
+      minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+      minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+    }
+    return { minR, maxR, minC, maxC };
+  }
+
+  function boxCost(cand, word) {
+    const b = currentBounds();
+    const r0 = cand.row, c0 = cand.col;
+    const r1 = cand.dir === 'V' ? cand.row + word.length - 1 : cand.row;
+    const c1 = cand.dir === 'H' ? cand.col + word.length - 1 : cand.col;
+    const minR = Math.min(b.minR, r0), maxR = Math.max(b.maxR, r1);
+    const minC = Math.min(b.minC, c0), maxC = Math.max(b.maxC, c1);
+    return (maxR - minR + 1) * (maxC - minC + 1);
+  }
+
+  function findCandidates(w) {
+    const candidates = [];
+    for (let li = 0; li < w.word.length; li++) {
+      const letter = w.word[li];
+      for (const [k, gletter] of grid.entries()) {
+        if (gletter !== letter) continue;
+        const [gr, gc] = k.split(',').map(Number);
+        const hRow = gr, hCol = gc - li;
+        const hScore = canPlace(w.word, hRow, hCol, 'H');
+        if (hScore !== null && hScore >= 1) candidates.push({ row: hRow, col: hCol, dir: 'H', score: hScore });
+        const vRow = gr - li, vCol = gc;
+        const vScore = canPlace(w.word, vRow, vCol, 'V');
+        if (vScore !== null && vScore >= 1) candidates.push({ row: vRow, col: vCol, dir: 'V', score: vScore });
+      }
+    }
+    return candidates;
+  }
+
+  placeWord(words[0].word, 0, 0, 'H');
+  placed.push({ ...words[0], row: 0, col: 0, dir: 'H' });
+
+  let unplacedList = [];
+  for (let idx = 1; idx < words.length; idx++) {
+    const w = words[idx];
+    const candidates = findCandidates(w);
+    if (candidates.length) {
+      candidates.forEach((c) => (c.cost = boxCost(c, w.word)));
+      candidates.sort((a, b) => a.cost - b.cost || b.score - a.score);
+      const best = candidates[0];
+      placeWord(w.word, best.row, best.col, best.dir);
+      placed.push({ ...w, row: best.row, col: best.col, dir: best.dir });
+    } else {
+      unplacedList.push(w);
+    }
+  }
+  // segunda pasada para las que no entraron al principio
+  for (const w of unplacedList) {
+    const candidates = findCandidates(w);
+    if (candidates.length) {
+      candidates.forEach((c) => (c.cost = boxCost(c, w.word)));
+      candidates.sort((a, b) => a.cost - b.cost || b.score - a.score);
+      const best = candidates[0];
+      placeWord(w.word, best.row, best.col, best.dir);
+      placed.push({ ...w, row: best.row, col: best.col, dir: best.dir });
+    }
+  }
+
+  if (placed.length < 6) return null; // muy pocas palabras entrelazadas, descartar
+
+  const b = currentBounds();
+  const ROWS = b.maxR - b.minR + 1;
+  const COLS = b.maxC - b.minC + 1;
+  const shifted = placed.map((p) => ({ ...p, row: p.row - b.minR, col: p.col - b.minC }));
+
+  const startMap = new Map();
+  let num = 1;
+  const starts = [];
+  shifted.forEach((p) => {
+    const k = p.row + ',' + p.col;
+    if (!startMap.has(k)) { starts.push({ row: p.row, col: p.col, key: k }); startMap.set(k, null); }
+  });
+  starts.sort((a, b) => a.row - b.row || a.col - b.col);
+  starts.forEach((s) => startMap.set(s.key, num++));
+  shifted.forEach((p) => (p.number = startMap.get(p.row + ',' + p.col)));
+
+  const across = shifted.filter((p) => p.dir === 'H').sort((a, b) => a.number - b.number);
+  const down = shifted.filter((p) => p.dir === 'V').sort((a, b) => a.number - b.number);
+  const allWords = [...across, ...down];
+
+  const cellMatrix = [];
+  for (let r = 0; r < ROWS; r++) cellMatrix.push(new Array(COLS).fill(null));
+  allWords.forEach((w, wIndex) => {
+    for (let i = 0; i < w.word.length; i++) {
+      const r = w.row + (w.dir === 'V' ? i : 0);
+      const c = w.col + (w.dir === 'H' ? i : 0);
+      if (!cellMatrix[r][c]) cellMatrix[r][c] = { answer: w.word[i], number: startMap.get(r + ',' + c), across: null, down: null };
+      if (w.dir === 'H') cellMatrix[r][c].across = wIndex;
+      else cellMatrix[r][c].down = wIndex;
+    }
+  });
+
+  return { ROWS, COLS, across, down, allWords, cellMatrix, usedWords: placed.map((p) => p.word) };
+}
+
+
+const WORD_BANK = [{"word":"francia","clue":"País europeo cuya capital es París"},{"word":"paris","clue":"Capital de Francia, famosa por la Torre Eiffel"},{"word":"londres","clue":"Capital de Inglaterra"},{"word":"inglaterra","clue":"País europeo cuya capital es Londres"},{"word":"espana","clue":"País europeo famoso por el flamenco y las tapas"},{"word":"madrid","clue":"Capital de España"},{"word":"italia","clue":"País europeo con forma de bota"},{"word":"roma","clue":"Capital de Italia"},{"word":"alemania","clue":"País europeo conocido por la cerveza y las salchichas"},{"word":"berlin","clue":"Capital de Alemania"},{"word":"rusia","clue":"El país más extenso del mundo"},{"word":"moscu","clue":"Capital de Rusia"},{"word":"china","clue":"País asiático más poblado del mundo"},{"word":"japon","clue":"País asiático conocido como la tierra del sol naciente"},{"word":"tokio","clue":"Capital de Japón"},{"word":"india","clue":"País asiático donde se encuentra el Taj Mahal"},{"word":"egipto","clue":"País africano famoso por sus pirámides"},{"word":"elcairo","clue":"Capital de Egipto"},{"word":"canada","clue":"País de América del Norte conocido por el jarabe de arce"},{"word":"australia","clue":"País y continente famoso por los canguros"},{"word":"brasil","clue":"País sudamericano de habla portuguesa"},{"word":"chile","clue":"País sudamericano largo y angosto"},{"word":"peru","clue":"País donde está Machu Picchu"},{"word":"colombia","clue":"País sudamericano famoso por su café"},{"word":"mexico","clue":"País donde se habla más español en el mundo"},{"word":"cuba","clue":"Isla caribeña, cuna de la salsa"},{"word":"grecia","clue":"País europeo cuna de la democracia"},{"word":"atenas","clue":"Capital de Grecia"},{"word":"portugal","clue":"País vecino de España, famoso por el fado"},{"word":"bolivia","clue":"País sudamericano con dos capitales: La Paz y Sucre"},{"word":"paraguay","clue":"País sudamericano donde también se habla guaraní"},{"word":"venezuela","clue":"País sudamericano con grandes reservas de petróleo"},{"word":"caracas","clue":"Capital de Venezuela"},{"word":"bogota","clue":"Capital de Colombia"},{"word":"lima","clue":"Capital de Perú"},{"word":"quito","clue":"Capital de Ecuador"},{"word":"habana","clue":"Capital de Cuba"},{"word":"santiago","clue":"Capital de Chile"},{"word":"asuncion","clue":"Capital de Paraguay"},{"word":"guatemala","clue":"País centroamericano de origen maya"},{"word":"ecuador","clue":"País sudamericano atravesado por la línea que le da nombre"},{"word":"everest","clue":"La montaña más alta del mundo"},{"word":"himalaya","clue":"Cordillera asiática donde está el Everest"},{"word":"andes","clue":"Cordillera que recorre gran parte de Sudamérica"},{"word":"alpes","clue":"Gran cadena montañosa del centro de Europa"},{"word":"nilo","clue":"El río más largo de África"},{"word":"amazonas","clue":"El río más caudaloso del mundo"},{"word":"pacifico","clue":"El océano más grande del mundo"},{"word":"atlantico","clue":"Océano ubicado entre América y Europa"},{"word":"mediterraneo","clue":"Mar ubicado entre Europa, África y Asia"},{"word":"caribe","clue":"Mar tropical rodeado de islas famosas por sus playas"},{"word":"sahara","clue":"El desierto cálido más grande del mundo"},{"word":"desierto","clue":"Región muy árida donde casi no llueve"},{"word":"selva","clue":"Bosque tropical denso y lluvioso"},{"word":"volcan","clue":"Montaña que puede expulsar lava"},{"word":"terremoto","clue":"Movimiento brusco de la tierra causado por el choque de placas"},{"word":"oceano","clue":"Gran extensión de agua salada que rodea los continentes"},{"word":"europa","clue":"Continente donde están Francia, Alemania e Italia"},{"word":"asia","clue":"El continente más grande y poblado del mundo"},{"word":"africa","clue":"Continente donde está el desierto del Sahara"},{"word":"oceania","clue":"Continente donde está Australia"},{"word":"antartida","clue":"Continente helado situado en el polo sur"},{"word":"continente","clue":"Gran extensión de tierra, como América o África"},{"word":"peninsula","clue":"Porción de tierra rodeada de agua por casi todos sus lados"},{"word":"isla","clue":"Porción de tierra rodeada completamente de agua"},{"word":"archipielago","clue":"Conjunto de islas cercanas entre sí"},{"word":"capital","clue":"Ciudad principal de un país, sede del gobierno"},{"word":"bandera","clue":"Símbolo patrio de tela con colores y diseños"},{"word":"himno","clue":"Canción patria que representa a un país"},{"word":"mapa","clue":"Representación gráfica de un territorio"},{"word":"brujula","clue":"Instrumento que siempre señala el norte"},{"word":"uruguay","clue":"País sudamericano cuya capital está sobre el Río de la Plata"},{"word":"montevideo","clue":"Capital de Uruguay"},{"word":"argentina","clue":"País sudamericano cuya capital es Buenos Aires"},{"word":"buenosaires","clue":"Capital de Argentina"},{"word":"artigas","clue":"Prócer de la independencia uruguaya"},{"word":"sanmartin","clue":"Prócer que cruzó los Andes para liberar Chile y Perú"},{"word":"tango","clue":"Baile y género musical nacido en el Río de la Plata"},{"word":"mate","clue":"Infusión tradicional que se toma con bombilla"},{"word":"bombilla","clue":"Utensilio metálico que se usa para tomar mate"},{"word":"termo","clue":"Recipiente que mantiene caliente el agua para el mate"},{"word":"asado","clue":"Comida a la parrilla típica del Río de la Plata"},{"word":"chivito","clue":"Plato uruguayo cuyo nombre puede confundir con carne de cabra"},{"word":"milanesa","clue":"Carne empanada muy popular en Argentina y Uruguay"},{"word":"choripan","clue":"Sándwich de chorizo típico de los asados y las canchas"},{"word":"chimichurri","clue":"Salsa de hierbas y vinagre que acompaña al asado"},{"word":"empanada","clue":"Masa rellena, típica de Argentina y Uruguay"},{"word":"alfajor","clue":"Dulce formado por dos tapas unidas por un relleno"},{"word":"dulcedeleche","clue":"Dulce típico rioplatense hecho con leche y azúcar"},{"word":"tortafrita","clue":"Masa frita muy asociada a los días de lluvia"},{"word":"carnaval","clue":"Fiesta popular con desfiles, muy famosa en Uruguay y Brasil"},{"word":"candombe","clue":"Ritmo afrouruguayo tocado con tambores"},{"word":"murga","clue":"Género musical y teatral del carnaval uruguayo"},{"word":"gaucho","clue":"Jinete y trabajador tradicional de las llanuras rioplatenses"},{"word":"pampa","clue":"Gran llanura característica de Argentina"},{"word":"patagonia","clue":"Región austral compartida por Argentina y Chile"},{"word":"iguazu","clue":"Cataratas ubicadas entre Argentina y Brasil"},{"word":"colonia","clue":"Ciudad uruguaya declarada Patrimonio de la Humanidad"},{"word":"rambla","clue":"Avenida costera que recorre Montevideo"},{"word":"ceibo","clue":"Flor nacional de Uruguay y Argentina"},{"word":"gardel","clue":"Cantor inseparable de la historia del tango"},{"word":"maradona","clue":"Futbolista argentino, ídolo del Mundial 86"},{"word":"messi","clue":"Futbolista argentino, campeón del mundo en Qatar 2022"},{"word":"penarol","clue":"Club uruguayo identificado con los colores amarillo y negro"},{"word":"nacional","clue":"Club uruguayo identificado con los colores blanco, azul y rojo"},{"word":"obelisco","clue":"Monumento porteño ubicado en la Avenida 9 de Julio"},{"word":"caminito","clue":"Calle turística de La Boca famosa por sus fachadas coloridas"},{"word":"bariloche","clue":"Ciudad patagónica famosa por sus lagos, montañas y chocolate"},{"word":"mardelplata","clue":"Ciudad balnearia argentina conocida como la Feliz"},{"word":"aconcagua","clue":"Montaña más alta de América"},{"word":"maracanazo","clue":"Nombre con que se conoce la histórica victoria uruguaya de 1950"},{"word":"centenario","clue":"Estadio construido para el Mundial de 1930"},{"word":"puntadeleste","clue":"Balneario uruguayo ubicado entre el río y el mar"},{"word":"napoleon","clue":"Militar francés que llegó a ser emperador"},{"word":"cleopatra","clue":"Última gran gobernante del antiguo Egipto"},{"word":"colon","clue":"Navegante que llegó a América en 1492"},{"word":"einstein","clue":"Científico que formuló la teoría de la relatividad"},{"word":"independencia","clue":"Proceso por el cual un país deja de depender de otro"},{"word":"imperio","clue":"Gran territorio gobernado por un solo poder, como el romano"},{"word":"piramides","clue":"Antiguas construcciones de Egipto usadas como tumbas"},{"word":"momia","clue":"Cuerpo conservado artificialmente, típico del antiguo Egipto"},{"word":"coliseo","clue":"Gran anfiteatro de la antigua Roma"},{"word":"vikingos","clue":"Pueblo navegante del norte de Europa en la Edad Media"},{"word":"castillo","clue":"Construcción fortificada típica de la Edad Media"},{"word":"dinosaurio","clue":"Animal prehistórico extinguido hace millones de años"},{"word":"corazon","clue":"Órgano que bombea la sangre por el cuerpo"},{"word":"cerebro","clue":"Órgano que controla el pensamiento y el sistema nervioso"},{"word":"pulmon","clue":"Órgano que se usa para respirar"},{"word":"higado","clue":"Órgano que filtra la sangre y ayuda a la digestión"},{"word":"esqueleto","clue":"Conjunto de huesos que sostiene el cuerpo"},{"word":"sangre","clue":"Líquido rojo que circula por las venas"},{"word":"musculo","clue":"Tejido del cuerpo que permite el movimiento"},{"word":"oxigeno","clue":"Gas esencial para poder respirar"},{"word":"hidrogeno","clue":"El elemento más liviano y abundante del universo"},{"word":"carbono","clue":"Elemento fundamental para la química de la vida"},{"word":"oro","clue":"Metal precioso de color amarillo brillante"},{"word":"plata","clue":"Metal precioso de color blanco brillante"},{"word":"hierro","clue":"Metal usado para fabricar herramientas y estructuras"},{"word":"sol","clue":"Estrella alrededor de la cual gira la Tierra"},{"word":"luna","clue":"Satélite natural de la Tierra"},{"word":"tierra","clue":"Planeta en el que vivimos"},{"word":"marte","clue":"Planeta conocido como el planeta rojo"},{"word":"jupiter","clue":"El planeta más grande del sistema solar"},{"word":"saturno","clue":"Planeta famoso por sus anillos"},{"word":"urano","clue":"Planeta que gira con una inclinación extrema"},{"word":"neptuno","clue":"El planeta más alejado del Sol"},{"word":"planeta","clue":"Cuerpo celeste que gira alrededor de una estrella"},{"word":"galaxia","clue":"Enorme conjunto de estrellas, como la Vía Láctea"},{"word":"estrella","clue":"Cuerpo celeste que brilla con luz propia"},{"word":"cometa","clue":"Cuerpo celeste helado que deja una estela al acercarse al Sol"},{"word":"arcoiris","clue":"Fenómeno óptico con los colores del espectro que aparece tras la lluvia"},{"word":"gravedad","clue":"Fuerza que nos mantiene pegados al suelo"},{"word":"fotosintesis","clue":"Proceso por el cual las plantas producen su alimento con luz solar"},{"word":"agua","clue":"Líquido esencial para la vida, formado por hidrógeno y oxígeno"},{"word":"fuego","clue":"Elemento caliente y luminoso producido por la combustión"},{"word":"viento","clue":"Aire en movimiento"},{"word":"lluvia","clue":"Agua que cae del cielo en forma de gotas"},{"word":"nieve","clue":"Agua congelada que cae en copos blancos"},{"word":"invierno","clue":"Estación del año más fría"},{"word":"verano","clue":"Estación del año más calurosa"},{"word":"otono","clue":"Estación del año en la que caen las hojas"},{"word":"primavera","clue":"Estación del año en la que florecen las plantas"},{"word":"semana","clue":"Período de siete días"},{"word":"calendario","clue":"Sistema que organiza los días, meses y años"},{"word":"leon","clue":"Felino conocido como el rey de la selva"},{"word":"tigre","clue":"Felino de rayas negras y anaranjadas"},{"word":"elefante","clue":"El mamífero terrestre más grande del mundo"},{"word":"jirafa","clue":"Animal africano de cuello muy largo"},{"word":"cebra","clue":"Animal africano parecido al caballo, con rayas blancas y negras"},{"word":"delfin","clue":"Mamífero marino muy inteligente y juguetón"},{"word":"ballena","clue":"El animal más grande del mundo"},{"word":"tiburon","clue":"Pez depredador temido por sus dientes filosos"},{"word":"aguila","clue":"Ave rapaz de gran tamaño, símbolo de varios países"},{"word":"condor","clue":"Gran ave rapaz símbolo de los Andes"},{"word":"jaguar","clue":"Felino más grande de América"},{"word":"puma","clue":"Felino americano también llamado león de montaña"},{"word":"zorro","clue":"Animal astuto de la familia de los cánidos"},{"word":"buho","clue":"Ave rapaz nocturna que puede girar casi toda la cabeza"},{"word":"pinguino","clue":"Ave que no vuela y vive en climas fríos"},{"word":"canguro","clue":"Animal australiano que lleva a sus crías en una bolsa"},{"word":"koala","clue":"Animal australiano que se alimenta de hojas de eucalipto"},{"word":"panda","clue":"Oso blanco y negro originario de China"},{"word":"mono","clue":"Animal trepador, pariente cercano de los humanos"},{"word":"cocodrilo","clue":"Reptil acuático de mandíbulas muy poderosas"},{"word":"serpiente","clue":"Reptil sin patas que se desplaza reptando"},{"word":"tortuga","clue":"Reptil de movimientos lentos y caparazón duro"},{"word":"rana","clue":"Anfibio saltador que suele vivir cerca del agua"},{"word":"murcielago","clue":"Único mamífero capaz de volar"},{"word":"hormiga","clue":"Insecto muy trabajador que vive en colonias"},{"word":"abeja","clue":"Insecto que produce miel"},{"word":"mariposa","clue":"Insecto de alas coloridas que nace de una oruga"},{"word":"caballo","clue":"Animal usado tradicionalmente para montar y trabajar el campo"},{"word":"vaca","clue":"Animal del que se obtiene la leche"},{"word":"oveja","clue":"Animal del que se obtiene la lana"},{"word":"gallina","clue":"Ave doméstica que pone huevos"},{"word":"pato","clue":"Ave acuática común en lagunas y estanques"},{"word":"conejo","clue":"Animal de orejas largas famoso por su velocidad"},{"word":"tero","clue":"Ave muy común en Uruguay, famosa por defender ruidosamente su territorio"},{"word":"carpincho","clue":"Gran roedor sudamericano también conocido como capibara"},{"word":"nandu","clue":"Ave corredora sudamericana incapaz de volar"},{"word":"futbol","clue":"Deporte más popular del mundo, se juega con los pies"},{"word":"basquet","clue":"Deporte en el que hay que encestar la pelota en un aro"},{"word":"voley","clue":"Deporte de red donde la pelota no puede tocar el piso"},{"word":"tenis","clue":"Deporte de raqueta que se juega en una cancha dividida por una red"},{"word":"rugby","clue":"Deporte de origen inglés con un balón ovalado"},{"word":"boxeo","clue":"Deporte de combate en el que se pelea con los puños"},{"word":"natacion","clue":"Deporte que se practica en el agua"},{"word":"ciclismo","clue":"Deporte que se practica en bicicleta"},{"word":"maraton","clue":"Carrera de larga distancia, algo más de 42 kilómetros"},{"word":"olimpiadas","clue":"Gran evento deportivo internacional que se celebra cada 4 años"},{"word":"mundial","clue":"Torneo de fútbol que se juega cada cuatro años entre selecciones"},{"word":"arquero","clue":"Jugador que defiende el arco en el fútbol"},{"word":"arbitro","clue":"Persona que dirige un partido y hace cumplir las reglas"},{"word":"cancha","clue":"Lugar donde se practican los deportes"},{"word":"estadio","clue":"Gran recinto donde se juegan los partidos y hay tribunas"},{"word":"campeon","clue":"Ganador de un torneo o competencia"},{"word":"medalla","clue":"Premio que se entrega a los ganadores de una competencia"},{"word":"beisbol","clue":"Deporte muy popular en Estados Unidos y el Caribe, se juega con bate y pelota"},{"word":"golf","clue":"Deporte en el que hay que meter una pelota en un hoyo usando palos"},{"word":"pizza","clue":"Comida italiana con masa, salsa de tomate y queso"},{"word":"pasta","clue":"Comida italiana como los fideos o los ravioles"},{"word":"sushi","clue":"Plato japonés a base de arroz y pescado crudo"},{"word":"taco","clue":"Comida mexicana con tortilla rellena"},{"word":"paella","clue":"Plato español a base de arroz, típico de Valencia"},{"word":"hamburguesa","clue":"Sándwich con una porción de carne entre dos panes"},{"word":"chocolate","clue":"Dulce hecho a partir del cacao"},{"word":"cafe","clue":"Bebida caliente hecha a partir de un grano tostado"},{"word":"vino","clue":"Bebida alcohólica hecha con uvas fermentadas"},{"word":"cerveza","clue":"Bebida alcohólica hecha principalmente con cebada y lúpulo"},{"word":"helado","clue":"Postre frío y dulce que se derrite con el calor"},{"word":"miel","clue":"Sustancia dulce producida por las abejas"},{"word":"queso","clue":"Alimento derivado de la leche"},{"word":"arroz","clue":"Cereal que es la base de la alimentación en gran parte de Asia"},{"word":"espejo","clue":"Superficie donde uno puede ver su propio reflejo"},{"word":"ventana","clue":"Abertura en una pared que deja entrar la luz"},{"word":"puerta","clue":"Abertura que se usa para entrar o salir de un lugar"},{"word":"cuchillo","clue":"Utensilio filoso que se usa para cortar"},{"word":"tenedor","clue":"Utensilio con varias puntas que se usa para comer"},{"word":"cuchara","clue":"Utensilio cóncavo que se usa para comer sopa"},{"word":"reloj","clue":"Objeto que se usa para saber la hora"},{"word":"paraguas","clue":"Objeto que se usa para protegerse de la lluvia"},{"word":"bicicleta","clue":"Vehículo de dos ruedas que se mueve pedaleando"},{"word":"avion","clue":"Vehículo que vuela y se usa para viajar largas distancias"},{"word":"barco","clue":"Vehículo que navega sobre el agua"},{"word":"tren","clue":"Vehículo que se desplaza sobre rieles"},{"word":"telefono","clue":"Aparato que se usa para hablar a distancia"},{"word":"television","clue":"Aparato que se usa para ver programas e imágenes"},{"word":"computadora","clue":"Aparato electrónico que se usa para trabajar, jugar y navegar internet"},{"word":"internet","clue":"Red mundial que conecta computadoras y permite navegar la web"},{"word":"robot","clue":"Máquina programable capaz de realizar tareas de forma automática"},{"word":"libro","clue":"Conjunto de hojas impresas y encuadernadas que se lee"},{"word":"mochila","clue":"Bolso que se lleva a la espalda"},{"word":"rock","clue":"Género musical nacido en los años 50 con guitarras eléctricas"},{"word":"jazz","clue":"Género musical nacido en Estados Unidos con mucha improvisación"},{"word":"salsa","clue":"Género musical y baile de origen caribeño"},{"word":"cumbia","clue":"Género musical y baile de origen colombiano muy popular en Latinoamérica"},{"word":"guitarra","clue":"Instrumento de cuerdas que se toca con los dedos o una púa"},{"word":"piano","clue":"Instrumento musical de teclas blancas y negras"},{"word":"bateria","clue":"Instrumento de percusión formado por varios tambores y platillos"},{"word":"orquesta","clue":"Gran grupo de músicos que tocan instrumentos juntos"},{"word":"cancion","clue":"Composición musical hecha para ser cantada"},{"word":"cervantes","clue":"Autor español de Don Quijote de la Mancha"},{"word":"shakespeare","clue":"Dramaturgo inglés autor de Hamlet y Romeo y Julieta"}];
+const PUZZLE_DATE = "2026-08-21";
+const FIREBASE_DB_URL = "https://crucigrama-felicitas-default-rtdb.firebaseio.com";
+const DAILY_LAYOUT = { ROWS: 22, COLS: 17, cellMatrix: [[null,null,null,null,null,null,null,null,null,null,null,{"answer":"C","number":1,"across":null,"down":9},null,null,null,null,null],[null,null,null,null,null,null,null,{"answer":"C","number":2,"across":null,"down":10},null,null,null,{"answer":"E","across":null,"down":9},null,null,null,null,null],[null,null,null,null,null,null,null,{"answer":"O","across":null,"down":10},null,{"answer":"O","number":3,"across":null,"down":11},null,{"answer":"R","across":null,"down":9},null,null,null,null,null],[null,null,null,null,null,null,null,{"answer":"N","across":null,"down":10},null,{"answer":"C","across":null,"down":11},null,{"answer":"E","across":null,"down":9},null,null,null,null,null],[{"answer":"H","number":4,"across":0,"down":12},{"answer":"I","across":0,"down":null},{"answer":"E","across":0,"down":null},{"answer":"R","across":0,"down":null},{"answer":"R","across":0,"down":null},{"answer":"O","across":0,"down":null},null,{"answer":"D","across":null,"down":10},null,{"answer":"E","across":null,"down":11},null,{"answer":"B","across":null,"down":9},null,null,null,null,null],[{"answer":"I","across":null,"down":12},null,null,null,null,null,null,{"answer":"O","across":null,"down":10},null,{"answer":"A","across":null,"down":11},null,{"answer":"R","across":null,"down":9},null,null,null,null,null],[{"answer":"M","number":5,"across":1,"down":12},{"answer":"E","across":1,"down":null},{"answer":"D","across":1,"down":null},{"answer":"I","across":1,"down":null},{"answer":"T","number":6,"across":1,"down":13},{"answer":"E","across":1,"down":null},{"answer":"R","across":1,"down":null},{"answer":"R","across":1,"down":10},{"answer":"A","across":1,"down":null},{"answer":"N","across":1,"down":11},{"answer":"E","across":1,"down":null},{"answer":"O","across":1,"down":9},null,null,null,null,null],[{"answer":"A","across":null,"down":12},null,null,null,{"answer":"E","across":null,"down":13},null,null,null,null,{"answer":"I","across":null,"down":11},null,null,null,null,null,null,null],[{"answer":"L","across":null,"down":12},null,null,{"answer":"G","number":7,"across":2,"down":null},{"answer":"R","across":2,"down":13},{"answer":"A","across":2,"down":null},{"answer":"V","across":2,"down":null},{"answer":"E","across":2,"down":null},{"answer":"D","across":2,"down":null},{"answer":"A","across":2,"down":11},{"answer":"D","across":2,"down":null},null,null,null,null,null,null],[{"answer":"A","across":null,"down":12},null,null,null,{"answer":"R","across":null,"down":13},null,null,null,null,null,null,null,null,null,null,null,null],[{"answer":"Y","across":null,"down":12},null,{"answer":"C","number":8,"across":3,"down":null},{"answer":"L","across":3,"down":null},{"answer":"E","across":3,"down":13},{"answer":"O","across":3,"down":null},{"answer":"P","across":3,"down":null},{"answer":"A","across":3,"down":null},{"answer":"T","across":3,"down":null},{"answer":"R","across":3,"down":null},{"answer":"A","across":3,"down":null},null,null,null,null,null,null],[{"answer":"A","across":null,"down":12},null,null,null,{"answer":"M","across":null,"down":13},null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,{"answer":"O","across":null,"down":13},null,null,null,{"answer":"N","number":9,"across":null,"down":14},null,null,null,null,null,null,null,null],[null,{"answer":"G","number":10,"across":4,"down":null},{"answer":"U","across":4,"down":null},{"answer":"I","across":4,"down":null},{"answer":"T","across":4,"down":13},{"answer":"A","across":4,"down":null},{"answer":"R","across":4,"down":null},{"answer":"R","across":4,"down":null},{"answer":"A","across":4,"down":14},null,{"answer":"M","number":11,"across":null,"down":15},null,null,null,null,null,null],[null,null,null,null,{"answer":"O","across":null,"down":13},null,null,null,{"answer":"C","across":null,"down":14},null,{"answer":"E","number":12,"across":5,"down":15},{"answer":"V","across":5,"down":null},{"answer":"E","across":5,"down":null},{"answer":"R","across":5,"down":null},{"answer":"E","across":5,"down":null},{"answer":"S","across":5,"down":null},{"answer":"T","across":5,"down":null}],[null,null,null,{"answer":"P","number":13,"across":null,"down":16},null,null,{"answer":"C","number":14,"across":null,"down":17},null,{"answer":"I","across":null,"down":14},null,{"answer":"D","across":null,"down":15},null,null,null,null,null,null],[null,{"answer":"L","number":15,"across":6,"down":null},{"answer":"L","across":6,"down":null},{"answer":"U","across":6,"down":16},{"answer":"V","across":6,"down":null},{"answer":"I","across":6,"down":null},{"answer":"A","across":6,"down":17},null,{"answer":"O","across":null,"down":14},null,{"answer":"A","across":null,"down":15},null,null,null,null,null,null],[null,null,null,{"answer":"M","across":null,"down":16},null,null,{"answer":"R","across":null,"down":17},null,{"answer":"N","across":null,"down":14},null,{"answer":"L","across":null,"down":15},null,null,null,null,null,null],[null,null,null,{"answer":"A","across":null,"down":16},null,{"answer":"C","number":16,"across":7,"down":null},{"answer":"A","across":7,"down":17},{"answer":"B","across":7,"down":null},{"answer":"A","across":7,"down":14},{"answer":"L","across":7,"down":null},{"answer":"L","across":7,"down":15},{"answer":"O","across":7,"down":null},null,null,null,null,null],[null,null,null,null,null,null,{"answer":"C","across":null,"down":17},null,{"answer":"L","across":null,"down":14},null,{"answer":"A","across":null,"down":15},null,null,null,null,null,null],[null,null,null,null,null,null,{"answer":"A","across":null,"down":17},null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,{"answer":"I","number":17,"across":8,"down":null},{"answer":"S","across":8,"down":17},{"answer":"L","across":8,"down":null},{"answer":"A","across":8,"down":null},null,null,null,null,null,null,null,null]], across: [{"word":"HIERRO","clue":"Metal usado para fabricar herramientas y estructuras","row":4,"col":0,"dir":"H","number":4},{"word":"MEDITERRANEO","clue":"Mar ubicado entre Europa, África y Asia","row":6,"col":0,"dir":"H","number":5},{"word":"GRAVEDAD","clue":"Fuerza que nos mantiene pegados al suelo","row":8,"col":3,"dir":"H","number":7},{"word":"CLEOPATRA","clue":"Última gran gobernante del antiguo Egipto","row":10,"col":2,"dir":"H","number":8},{"word":"GUITARRA","clue":"Instrumento de cuerdas que se toca con los dedos o una púa","row":13,"col":1,"dir":"H","number":10},{"word":"EVEREST","clue":"La montaña más alta del mundo","row":14,"col":10,"dir":"H","number":12},{"word":"LLUVIA","clue":"Agua que cae del cielo en forma de gotas","row":16,"col":1,"dir":"H","number":15},{"word":"CABALLO","clue":"Animal usado tradicionalmente para montar y trabajar el campo","row":18,"col":5,"dir":"H","number":16},{"word":"ISLA","clue":"Porción de tierra rodeada completamente de agua","row":21,"col":5,"dir":"H","number":17}], down: [{"word":"CEREBRO","clue":"Órgano que controla el pensamiento y el sistema nervioso","row":0,"col":11,"dir":"V","number":1},{"word":"CONDOR","clue":"Gran ave rapaz símbolo de los Andes","row":1,"col":7,"dir":"V","number":2},{"word":"OCEANIA","clue":"Continente donde está Australia","row":2,"col":9,"dir":"V","number":3},{"word":"HIMALAYA","clue":"Cordillera asiática donde está el Everest","row":4,"col":0,"dir":"V","number":4},{"word":"TERREMOTO","clue":"Movimiento brusco de la tierra causado por el choque de placas","row":6,"col":4,"dir":"V","number":6},{"word":"NACIONAL","clue":"Club uruguayo identificado con los colores blanco, azul y rojo","row":12,"col":8,"dir":"V","number":9},{"word":"MEDALLA","clue":"Premio que se entrega a los ganadores de una competencia","row":13,"col":10,"dir":"V","number":11},{"word":"PUMA","clue":"Felino americano también llamado león de montaña","row":15,"col":3,"dir":"V","number":13},{"word":"CARACAS","clue":"Capital de Venezuela","row":15,"col":6,"dir":"V","number":14}] };
+DAILY_LAYOUT.allWords = [...DAILY_LAYOUT.across, ...DAILY_LAYOUT.down];
+
+
+const USER_KEY = 'crucigrama_user_v1';
+function loadUser() { try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch (e) { return null; } }
+function saveUser(u) { localStorage.setItem(USER_KEY, JSON.stringify(u)); }
+function sanitizeUsername(v) {
+  return v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9_]/g, '').slice(0, 20);
+}
+let currentUser = loadUser();
+
+function renderUserBadge() {
+  const el = document.getElementById('userBadge');
+  if (!el) return;
+  if (currentUser) {
+    el.innerHTML = `👤 ${currentUser.nombre} ${currentUser.apellido} (@${currentUser.username}) <button id="btnChangeUser">cambiar</button>`;
+  } else {
+    el.innerHTML = '';
+  }
+  const btn = document.getElementById('btnChangeUser');
+  if (btn) btn.addEventListener('click', () => openUserModal(true));
+}
+
+function openUserModal(isEdit) {
+  const overlay = document.getElementById('userModalOverlay');
+  const errEl = document.getElementById('modalError');
+  errEl.textContent = '';
+  if (isEdit && currentUser) {
+    document.getElementById('inNombre').value = currentUser.nombre;
+    document.getElementById('inApellido').value = currentUser.apellido;
+    document.getElementById('inUsername').value = currentUser.username;
+  }
+  overlay.classList.add('on');
+  document.getElementById('inNombre').focus();
+}
+
+function closeUserModal() {
+  document.getElementById('userModalOverlay').classList.remove('on');
+}
+
+function wireUserModal(onReady) {
+  const form = document.getElementById('userForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('inNombre').value.trim();
+    const apellido = document.getElementById('inApellido').value.trim();
+    const username = sanitizeUsername(document.getElementById('inUsername').value.trim());
+    const errEl = document.getElementById('modalError');
+    if (!nombre || !apellido || !username) {
+      errEl.textContent = 'Completá los tres campos (el usuario solo puede tener letras, números y _).';
+      return;
+    }
+    currentUser = { nombre, apellido, username };
+    saveUser(currentUser);
+    renderUserBadge();
+    closeUserModal();
+    if (onReady) onReady();
+  });
+  if (!currentUser) openUserModal(false);
+  else renderUserBadge();
+}
+
+
+let ROWS, COLS, cellMatrix, across, down, allWords, inputRefs = {};
+let selectedWordIndex = null, selectedCell = null;
+let isDailyPuzzle = true, usedReveal = false, alreadyWon = false, hintCount = 0;
+const HINT_PENALTY_SECONDS = 5;
+
+const gridEl = document.getElementById('grid');
+const statusEl = document.getElementById('status');
+const acrossList = document.getElementById('acrossList');
+const downList = document.getElementById('downList');
+const practiceBadge = document.getElementById('practiceBadge');
+const btnBackToDaily = document.getElementById('btnBackToDaily');
+const subtitleText = document.getElementById('subtitleText');
+const submitBox = document.getElementById('submitBox');
+const submitMsg = document.getElementById('submitMsg');
+const btnSubmit = document.getElementById('btnSubmit');
+const hintCounterEl = document.getElementById('hintCounter');
+const ORIGINAL_SUBTITLE = subtitleText.textContent;
+
+function shuffleRandom(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildRandomLayout(excludeWords) {
+  const exclude = new Set(excludeWords || []);
+  let pool = WORD_BANK.filter((w) => !exclude.has(normalize(w.word)));
+  if (pool.length < 18) pool = WORD_BANK;
+  const shuffled = shuffleRandom(pool);
+  let layout = null;
+  let attemptSize = Math.min(19, shuffled.length);
+  while (!layout && attemptSize <= shuffled.length) {
+    layout = generateLayout(shuffled.slice(0, attemptSize));
+    if (layout && layout.allWords.length < 10 && attemptSize < shuffled.length) layout = null;
+    attemptSize += 6;
+  }
+  return layout;
+}
+
+function renderPuzzle(layout) {
+  ROWS = layout.ROWS; COLS = layout.COLS; cellMatrix = layout.cellMatrix;
+  across = layout.across; down = layout.down; allWords = layout.allWords;
+  inputRefs = {};
+  selectedWordIndex = null; selectedCell = null;
+  usedReveal = false; alreadyWon = false; hintCount = 0;
+  submitBox.classList.remove('on');
+  submitMsg.textContent = '';
+  hintCounterEl.textContent = '';
+
+  gridEl.innerHTML = '';
+  gridEl.style.gridTemplateColumns = `repeat(${COLS}, var(--cell))`;
+  gridEl.style.gridTemplateRows = `repeat(${ROWS}, var(--cell))`;
+
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const cellData = cellMatrix[r][c];
+      const div = document.createElement('div');
+      if (!cellData) { div.className = 'cell blocked'; gridEl.appendChild(div); continue; }
+      div.className = 'cell'; div.dataset.r = r; div.dataset.c = c;
+      if (cellData.number) {
+        const numSpan = document.createElement('span');
+        numSpan.className = 'num'; numSpan.textContent = cellData.number;
+        div.appendChild(numSpan);
+      }
+      const input = document.createElement('input');
+      input.setAttribute('maxlength', '1');
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('inputmode', 'text');
+      input.dataset.r = r; input.dataset.c = c;
+      wireInput(input, r, c);
+      div.appendChild(input);
+      gridEl.appendChild(div);
+      inputRefs[r + ',' + c] = input;
+    }
+  }
+
+  acrossList.innerHTML = ''; downList.innerHTML = '';
+  renderClueList(across, acrossList);
+  renderClueList(down, downList);
+
+  if (allWords.length) selectWord(0);
+  resetTimer();
+  updateStatus();
+}
+
+function renderClueList(list, ul) {
+  list.forEach((w) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<b>${w.number}.</b> ${w.clue} <span style="opacity:.55">(${w.word.length})</span>`;
+    const idx = allWords.indexOf(w);
+    li.dataset.index = idx;
+    li.addEventListener('click', () => {
+      selectWord(idx);
+      const input = inputRefs[w.row + ',' + w.col];
+      if (input) input.focus();
+    });
+    ul.appendChild(li);
+  });
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.cell.active-word').forEach((el) => el.classList.remove('active-word'));
+  document.querySelectorAll('.cell.active-cell').forEach((el) => el.classList.remove('active-cell'));
+  document.querySelectorAll('.clue-group li.selected').forEach((el) => el.classList.remove('selected'));
+}
+function selectWord(index) {
+  clearHighlights();
+  selectedWordIndex = index;
+  const w = allWords[index];
+  for (let i = 0; i < w.word.length; i++) {
+    const r = w.row + (w.dir === 'V' ? i : 0);
+    const c = w.col + (w.dir === 'H' ? i : 0);
+    inputRefs[r + ',' + c].parentElement.classList.add('active-word');
+  }
+  document.querySelectorAll(`.clue-group li[data-index="${index}"]`).forEach((el) => el.classList.add('selected'));
+}
+function selectCell(r, c, preferDir) {
+  const cellData = cellMatrix[r][c];
+  if (!cellData) return;
+  selectedCell = { r, c };
+  let wIndex;
+  if (preferDir === 'H' && cellData.across !== null) wIndex = cellData.across;
+  else if (preferDir === 'V' && cellData.down !== null) wIndex = cellData.down;
+  else if (cellData.across !== null) wIndex = cellData.across;
+  else wIndex = cellData.down;
+  selectWord(wIndex);
+  document.querySelectorAll('.cell.active-cell').forEach((el) => el.classList.remove('active-cell'));
+  inputRefs[r + ',' + c].parentElement.classList.add('active-cell');
+}
+
+let timerStarted = false, timerInterval = null, startTime = null, finishSeconds = null;
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true; startTime = Date.now();
+  timerInterval = setInterval(() => {
+    const s = Math.floor((Date.now() - startTime) / 1000);
+    const mm = String(Math.floor(s / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `⏱ ${mm}:${ss}`;
+  }, 1000);
+}
+function stopTimer() { if (timerInterval) clearInterval(timerInterval); }
+function resetTimer() {
+  stopTimer();
+  timerStarted = false;
+  startTime = null;
+  finishSeconds = null;
+  document.getElementById('timer').textContent = '⏱ 00:00 — escribí una letra para arrancar el cronómetro';
+}
+
+function wireInput(input, r, c) {
+  input.addEventListener('focus', () => {
+    const cellData = cellMatrix[r][c];
+    let preferDir = null;
+    if (selectedWordIndex !== null) {
+      const curW = allWords[selectedWordIndex];
+      preferDir = curW.dir;
+      if (curW.dir === 'H' && cellData.across === null) preferDir = null;
+      if (curW.dir === 'V' && cellData.down === null) preferDir = null;
+    }
+    selectCell(r, c, preferDir || 'H');
+  });
+  input.addEventListener('click', () => {
+    const cellData = cellMatrix[r][c];
+    if (selectedCell && selectedCell.r === r && selectedCell.c === c && cellData.across !== null && cellData.down !== null) {
+      const curW = allWords[selectedWordIndex];
+      selectCell(r, c, curW.dir === 'H' ? 'V' : 'H');
+    }
+  });
+  input.addEventListener('input', (e) => {
+    startTimer();
+    let val = e.target.value.toUpperCase().replace(/[^A-ZÑ]/g, '');
+    val = val.slice(-1);
+    e.target.value = val;
+    e.target.classList.remove('correct', 'incorrect', 'revealed');
+    if (val) moveNext(r, c);
+    updateStatus();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !e.target.value) { movePrev(r, c); e.preventDefault(); }
+    else if (e.key === 'ArrowRight') { moveDir(r, c, 0, 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { moveDir(r, c, 0, -1); e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { moveDir(r, c, 1, 0); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { moveDir(r, c, -1, 0); e.preventDefault(); }
+  });
+}
+
+function moveNext(r, c) {
+  if (selectedWordIndex === null) return;
+  const w = allWords[selectedWordIndex];
+  const idx = w.dir === 'H' ? c - w.col : r - w.row;
+  if (idx < w.word.length - 1) {
+    const nr = w.row + (w.dir === 'V' ? idx + 1 : 0);
+    const nc = w.col + (w.dir === 'H' ? idx + 1 : 0);
+    inputRefs[nr + ',' + nc].focus();
+  }
+}
+function movePrev(r, c) {
+  if (selectedWordIndex === null) return;
+  const w = allWords[selectedWordIndex];
+  const idx = w.dir === 'H' ? c - w.col : r - w.row;
+  if (idx > 0) {
+    const pr = w.row + (w.dir === 'V' ? idx - 1 : 0);
+    const pc = w.col + (w.dir === 'H' ? idx - 1 : 0);
+    inputRefs[pr + ',' + pc].focus();
+    inputRefs[pr + ',' + pc].value = '';
+  }
+}
+function moveDir(r, c, dr, dc) {
+  let nr = r + dr, nc = c + dc;
+  while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (cellMatrix[nr][nc]) { inputRefs[nr + ',' + nc].focus(); return; }
+    nr += dr; nc += dc;
+  }
+}
+
+function updateStatus() {
+  let done = 0;
+  allWords.forEach((w, idx) => {
+    let complete = true;
+    for (let i = 0; i < w.word.length; i++) {
+      const r = w.row + (w.dir === 'V' ? i : 0);
+      const c = w.col + (w.dir === 'H' ? i : 0);
+      if (inputRefs[r + ',' + c].value.toUpperCase() !== w.word[i]) complete = false;
+    }
+    if (complete) done++;
+    document.querySelectorAll(`.clue-group li[data-index="${idx}"]`).forEach((el) => el.classList.toggle('done', complete));
+  });
+  statusEl.textContent = `${done} / ${allWords.length} palabras completas`;
+  const justWon = done === allWords.length && !alreadyWon;
+  statusEl.classList.toggle('win', done === allWords.length);
+  if (done === allWords.length) {
+    statusEl.textContent = `¡Completaste el crucigrama! 🧉 ${allWords.length}/${allWords.length}`;
+    if (justWon) {
+      alreadyWon = true;
+      finishSeconds = (timerStarted ? Math.floor((Date.now() - startTime) / 1000) : 0) + hintCount * HINT_PENALTY_SECONDS;
+      stopTimer();
+      if (isDailyPuzzle && !usedReveal) showSubmitBox();
+    }
+  }
+}
+
+function showSubmitBox() {
+  submitBox.classList.add('on');
+  const mm = String(Math.floor(finishSeconds / 60)).padStart(2, '0');
+  const ss = String(finishSeconds % 60).padStart(2, '0');
+  btnSubmit.textContent = `📤 Mandar mi tiempo a la tabla (${mm}:${ss})`;
+  btnSubmit.disabled = false;
+  if (!FIREBASE_DB_URL) {
+    submitMsg.textContent = '⚠️ La tabla de posiciones todavía no está configurada.';
+    btnSubmit.disabled = true;
+  } else if (hintCount > 0) {
+    submitMsg.textContent = `Incluye ${hintCount} pista${hintCount === 1 ? '' : 's'} (+${hintCount * HINT_PENALTY_SECONDS}s de penalización).`;
+  } else {
+    submitMsg.textContent = '';
+  }
+}
+
+btnSubmit.addEventListener('click', async () => {
+  if (!currentUser) { openUserModal(false); return; }
+  btnSubmit.disabled = true;
+  submitMsg.textContent = 'Enviando...';
+  try {
+    const payload = { nombre: currentUser.nombre, apellido: currentUser.apellido, username: currentUser.username, seconds: finishSeconds, hintsUsed: hintCount, ts: Date.now() };
+    const res = await fetch(`${FIREBASE_DB_URL}/scores/${PUZZLE_DATE}/${currentUser.username}.json`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    submitMsg.innerHTML = '✅ ¡Enviado! <a href="../leaderboard.html">Ver tabla de posiciones</a>';
+  } catch (err) {
+    submitMsg.textContent = 'No se pudo enviar. Revisá tu conexión y probá de nuevo.';
+    btnSubmit.disabled = false;
+  }
+});
+
+document.getElementById('btnCheck').addEventListener('click', () => {
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const cellData = cellMatrix[r][c];
+      if (!cellData) continue;
+      const input = inputRefs[r + ',' + c];
+      if (!input.value) continue;
+      input.classList.remove('revealed');
+      if (input.value.toUpperCase() === cellData.answer) { input.classList.add('correct'); input.classList.remove('incorrect'); }
+      else { input.classList.add('incorrect'); input.classList.remove('correct'); }
+    }
+  }
+  updateStatus();
+});
+document.getElementById('btnHint').addEventListener('click', () => {
+  startTimer();
+  if (selectedWordIndex === null) return;
+  let w = allWords[selectedWordIndex];
+  let targetIdx = -1;
+  for (let i = 0; i < w.word.length; i++) {
+    const r = w.row + (w.dir === 'V' ? i : 0);
+    const c = w.col + (w.dir === 'H' ? i : 0);
+    if (inputRefs[r + ',' + c].value.toUpperCase() !== w.word[i]) { targetIdx = i; break; }
+  }
+  if (targetIdx === -1) {
+    statusEl.textContent = 'Esa palabra ya está completa — elegí otra para pedir pista.';
+    setTimeout(updateStatus, 1800);
+    return;
+  }
+  const r = w.row + (w.dir === 'V' ? targetIdx : 0);
+  const c = w.col + (w.dir === 'H' ? targetIdx : 0);
+  const input = inputRefs[r + ',' + c];
+  input.value = w.word[targetIdx];
+  input.classList.remove('incorrect');
+  input.classList.add('revealed');
+  input.focus();
+  hintCount++;
+  hintCounterEl.textContent = `💡 ${hintCount} pista${hintCount === 1 ? '' : 's'} usada${hintCount === 1 ? '' : 's'} (+${hintCount * HINT_PENALTY_SECONDS}s)`;
+  updateStatus();
+});
+document.getElementById('btnReveal').addEventListener('click', () => {
+  usedReveal = true;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const cellData = cellMatrix[r][c];
+      if (!cellData) continue;
+      const input = inputRefs[r + ',' + c];
+      input.value = cellData.answer;
+      input.classList.remove('correct', 'incorrect');
+      input.classList.add('revealed');
+    }
+  }
+  updateStatus(); stopTimer();
+  submitBox.classList.remove('on');
+});
+document.getElementById('btnReset').addEventListener('click', () => {
+  Object.values(inputRefs).forEach((input) => { input.value = ''; input.classList.remove('correct', 'incorrect', 'revealed'); });
+  statusEl.classList.remove('win');
+  resetTimer();
+  usedReveal = false; alreadyWon = false; hintCount = 0;
+  hintCounterEl.textContent = '';
+  submitBox.classList.remove('on');
+  updateStatus();
+});
+
+document.getElementById('btnNew').addEventListener('click', () => {
+  const layout = buildRandomLayout(allWords.map((w) => w.word));
+  if (!layout) { alert('No se pudo armar uno nuevo, probá de nuevo.'); return; }
+  isDailyPuzzle = false;
+  practiceBadge.classList.add('on');
+  btnBackToDaily.style.display = 'inline-block';
+  subtitleText.textContent = 'Crucigrama de práctica — palabras al azar, no cuenta para la tabla.';
+  renderPuzzle(layout);
+});
+
+btnBackToDaily.addEventListener('click', () => {
+  isDailyPuzzle = true;
+  practiceBadge.classList.remove('on');
+  btnBackToDaily.style.display = 'none';
+  subtitleText.textContent = ORIGINAL_SUBTITLE;
+  renderPuzzle(DAILY_LAYOUT);
+});
+
+wireUserModal(() => {});
+renderPuzzle(DAILY_LAYOUT);
+</script>
+</body>
+</html>
