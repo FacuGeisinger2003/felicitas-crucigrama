@@ -1,23 +1,4 @@
 {
-  "2026-08-18": [
-    "TELEVISION",
-    "PINGUINO",
-    "OBELISCO",
-    "MARADONA",
-    "MUSCULO",
-    "CUCHARA",
-    "BATERIA",
-    "JAGUAR",
-    "ESPANA",
-    "QUITO",
-    "INDIA",
-    "PLATA",
-    "SELVA",
-    "PIANO",
-    "TIGRE",
-    "NILO",
-    "TACO"
-  ],
   "2026-08-19": [
     "MONTEVIDEO",
     "SANMARTIN",
@@ -642,5 +623,26 @@
     "TACO",
     "PATO",
     "MARTE"
+  ],
+  "2026-09-18": [
+    "INDEPENDENCIA",
+    "OLIMPIADAS",
+    "VENEZUELA",
+    "MARIPOSA",
+    "CAMINITO",
+    "LONDRES",
+    "BOLIVIA",
+    "BEISBOL",
+    "TENEDOR",
+    "MUSCULO",
+    "COMETA",
+    "JAGUAR",
+    "GARDEL",
+    "CEIBO",
+    "QUESO",
+    "URANO",
+    "MONO",
+    "GOLF",
+    "MIEL"
   ]
 }
