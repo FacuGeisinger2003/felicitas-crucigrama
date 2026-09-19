@@ -1,24 +1,4 @@
 {
-  "2026-08-19": [
-    "MONTEVIDEO",
-    "SANMARTIN",
-    "CARPINCHO",
-    "ATLANTICO",
-    "DESIERTO",
-    "VIKINGOS",
-    "INTERNET",
-    "BRUJULA",
-    "NEPTUNO",
-    "RAMBLA",
-    "VOLCAN",
-    "HIGADO",
-    "FUEGO",
-    "CEBRA",
-    "ANDES",
-    "PANDA",
-    "MIEL",
-    "ORO"
-  ],
   "2026-08-20": [
     "INDEPENDENCIA",
     "PATAGONIA",
@@ -644,5 +624,26 @@
     "MONO",
     "GOLF",
     "MIEL"
+  ],
+  "2026-09-19": [
+    "INDEPENDENCIA",
+    "DINOSAURIO",
+    "BICICLETA",
+    "PATAGONIA",
+    "COCODRILO",
+    "CAMINITO",
+    "PINGUINO",
+    "MARIPOSA",
+    "CABALLO",
+    "CEREBRO",
+    "CANCION",
+    "CARBONO",
+    "JIRAFA",
+    "ESPANA",
+    "GARDEL",
+    "TERMO",
+    "PIANO",
+    "ROCK",
+    "RANA"
   ]
 }
