@@ -1,25 +1,4 @@
 {
-  "2026-08-20": [
-    "INDEPENDENCIA",
-    "PATAGONIA",
-    "CARNAVAL",
-    "ORQUESTA",
-    "ARCOIRIS",
-    "PACIFICO",
-    "BEISBOL",
-    "COLONIA",
-    "URUGUAY",
-    "GALLINA",
-    "TENEDOR",
-    "SANGRE",
-    "MEXICO",
-    "MURGA",
-    "TOKIO",
-    "ALPES",
-    "MONO",
-    "LUNA",
-    "RANA"
-  ],
   "2026-08-21": [
     "MEDITERRANEO",
     "TERREMOTO",
@@ -645,5 +624,26 @@
     "PIANO",
     "ROCK",
     "RANA"
+  ],
+  "2026-09-20": [
+    "MONTEVIDEO",
+    "ATLANTICO",
+    "TERREMOTO",
+    "DESIERTO",
+    "ORQUESTA",
+    "VIKINGOS",
+    "PACIFICO",
+    "CARNAVAL",
+    "BOMBILLA",
+    "MEDALLA",
+    "CARACAS",
+    "BOGOTA",
+    "CANCHA",
+    "GAUCHO",
+    "FUTBOL",
+    "ALPES",
+    "FUEGO",
+    "ANDES",
+    "ORO"
   ]
 }
