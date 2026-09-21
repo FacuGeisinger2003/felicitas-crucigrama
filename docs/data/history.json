@@ -1,24 +1,4 @@
 {
-  "2026-08-21": [
-    "MEDITERRANEO",
-    "TERREMOTO",
-    "CLEOPATRA",
-    "GRAVEDAD",
-    "HIMALAYA",
-    "GUITARRA",
-    "NACIONAL",
-    "CABALLO",
-    "MEDALLA",
-    "CARACAS",
-    "CEREBRO",
-    "OCEANIA",
-    "HIERRO",
-    "CONDOR",
-    "LLUVIA",
-    "PUMA",
-    "ISLA",
-    "EVEREST"
-  ],
   "2026-08-22": [
     "PUNTADELESTE",
     "SHAKESPEARE",
@@ -645,5 +625,25 @@
     "FUEGO",
     "ANDES",
     "ORO"
+  ],
+  "2026-09-21": [
+    "PUNTADELESTE",
+    "CLEOPATRA",
+    "GUITARRA",
+    "NACIONAL",
+    "PLANETA",
+    "CORAZON",
+    "CUCHARA",
+    "URUGUAY",
+    "TORTUGA",
+    "HIERRO",
+    "TOKIO",
+    "COLON",
+    "OTONO",
+    "PANDA",
+    "PUMA",
+    "CUCHILLO",
+    "CONDOR",
+    "INDIA"
   ]
 }
