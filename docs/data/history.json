@@ -1,25 +1,4 @@
 {
-  "2026-08-31": [
-    "ESQUELETO",
-    "TERREMOTO",
-    "ANTARTIDA",
-    "OBELISCO",
-    "MARIPOSA",
-    "BOLIVIA",
-    "BEISBOL",
-    "BALLENA",
-    "GARDEL",
-    "JAGUAR",
-    "NIEVE",
-    "TIGRE",
-    "BOXEO",
-    "QUITO",
-    "MARTE",
-    "LUNA",
-    "TACO",
-    "NILO",
-    "ISLA"
-  ],
   "2026-09-01": [
     "MEDITERRANEO",
     "TERREMOTO",
@@ -644,5 +623,26 @@
     "SUSHI",
     "TENIS",
     "PASTA"
+  ],
+  "2026-10-01": [
+    "ARCHIPIELAGO",
+    "MEDITERRANEO",
+    "CENTENARIO",
+    "BALLENA",
+    "BATERIA",
+    "COLISEO",
+    "ELCAIRO",
+    "COLONIA",
+    "PUERTA",
+    "MEXICO",
+    "CONEJO",
+    "CANADA",
+    "CEBRA",
+    "BOXEO",
+    "ASADO",
+    "CUBA",
+    "MAPA",
+    "VACA",
+    "VOLEY"
   ]
 }
