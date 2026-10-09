@@ -1,25 +1,4 @@
 {
-  "2026-09-08": [
-    "COMPUTADORA",
-    "SHAKESPEARE",
-    "INGLATERRA",
-    "ACONCAGUA",
-    "PINGUINO",
-    "NATACION",
-    "CASTILLO",
-    "FRANCIA",
-    "BASQUET",
-    "CANGURO",
-    "OXIGENO",
-    "GALAXIA",
-    "ATENAS",
-    "CUMBIA",
-    "VERANO",
-    "MOMIA",
-    "SUSHI",
-    "RUSIA",
-    "TREN"
-  ],
   "2026-09-09": [
     "MARDELPLATA",
     "CHIMICHURRI",
@@ -622,5 +601,26 @@
     "PATO",
     "VINO",
     "PIZZA"
+  ],
+  "2026-10-09": [
+    "SHAKESPEARE",
+    "BUENOSAIRES",
+    "COMPUTADORA",
+    "AUSTRALIA",
+    "MARADONA",
+    "CARNAVAL",
+    "GALAXIA",
+    "ALFAJOR",
+    "CAMPEON",
+    "FUTBOL",
+    "IGUAZU",
+    "HABANA",
+    "NANDU",
+    "RUSIA",
+    "PAMPA",
+    "TOKIO",
+    "PINGUINO",
+    "FUEGO",
+    "TERO"
   ]
 }
