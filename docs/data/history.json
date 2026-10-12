@@ -1,24 +1,4 @@
 {
-  "2026-09-11": [
-    "DULCEDELECHE",
-    "HAMBURGUESA",
-    "BARILOCHE",
-    "TELEFONO",
-    "MILANESA",
-    "COLOMBIA",
-    "ELEFANTE",
-    "HORMIGA",
-    "DELFIN",
-    "EGIPTO",
-    "HELADO",
-    "JIRAFA",
-    "BRASIL",
-    "RELOJ",
-    "ARROZ",
-    "ZORRO",
-    "ROMA",
-    "CUBA"
-  ],
   "2026-09-12": [
     "ESQUELETO",
     "INVIERNO",
@@ -623,5 +603,26 @@
     "TIGRE",
     "ROBOT",
     "RUSIA"
+  ],
+  "2026-10-12": [
+    "HAMBURGUESA",
+    "MARDELPLATA",
+    "MARACANAZO",
+    "HIDROGENO",
+    "ALEMANIA",
+    "MILANESA",
+    "ORQUESTA",
+    "ARBITRO",
+    "HORMIGA",
+    "FRANCIA",
+    "AGUILA",
+    "VIENTO",
+    "PULMON",
+    "DELFIN",
+    "SALSA",
+    "MOMIA",
+    "MURGA",
+    "QUITO",
+    "RELOJ"
   ]
 }
