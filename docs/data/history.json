@@ -1,25 +1,4 @@
 {
-  "2026-09-13": [
-    "BUENOSAIRES",
-    "MARACANAZO",
-    "CENTENARIO",
-    "CERVANTES",
-    "PARAGUAY",
-    "AMAZONAS",
-    "SANTIAGO",
-    "EINSTEIN",
-    "PARAGUAS",
-    "ASUNCION",
-    "ESTRELLA",
-    "IMPERIO",
-    "PENAROL",
-    "BANDERA",
-    "AFRICA",
-    "CHINA",
-    "OVEJA",
-    "KOALA",
-    "TANGO"
-  ],
   "2026-09-14": [
     "MURCIELAGO",
     "TORTAFRITA",
@@ -624,5 +603,26 @@
     "JAPON",
     "ARROZ",
     "TREN"
+  ],
+  "2026-10-14": [
+    "MURCIELAGO",
+    "CICLISMO",
+    "COLOMBIA",
+    "PARAGUAY",
+    "EINSTEIN",
+    "BASQUET",
+    "TIBURON",
+    "PENAROL",
+    "IMPERIO",
+    "MARATON",
+    "MOCHILA",
+    "GARDEL",
+    "TIERRA",
+    "ZORRO",
+    "BARCO",
+    "ROMA",
+    "JAZZ",
+    "PERU",
+    "ASIA"
   ]
 }
