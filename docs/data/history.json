@@ -1,25 +1,4 @@
 {
-  "2026-09-15": [
-    "TELEFONO",
-    "INTERNET",
-    "CHORIPAN",
-    "EMPANADA",
-    "SATURNO",
-    "ECUADOR",
-    "BRUJULA",
-    "ARTIGAS",
-    "RAMBLA",
-    "ITALIA",
-    "LLUVIA",
-    "RUGBY",
-    "PAMPA",
-    "HIMNO",
-    "VOLEY",
-    "PASTA",
-    "TIGRE",
-    "ASADO",
-    "CUBA"
-  ],
   "2026-09-16": [
     "MEDITERRANEO",
     "ARCHIPIELAGO",
@@ -624,5 +603,26 @@
     "LUNA",
     "BUHO",
     "SOL"
+  ],
+  "2026-10-16": [
+    "MEDITERRANEO",
+    "ARCHIPIELAGO",
+    "GUATEMALA",
+    "BALLENA",
+    "ELCAIRO",
+    "CONEJO",
+    "CANADA",
+    "ITALIA",
+    "RAMBLA",
+    "VERANO",
+    "TENIS",
+    "BOXEO",
+    "CEBRA",
+    "ASADO",
+    "SUSHI",
+    "PASTA",
+    "MAPA",
+    "VACA",
+    "CUBA"
   ]
 }
